@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "lotr_custom_model:block/copper_block"
+  }
+
+}
