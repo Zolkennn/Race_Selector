@@ -1,17 +1,21 @@
 package fr.zolkenn.lotr_custom_model;
 
 
+import fr.zolkenn.lotr_custom_model.entities.BruteEntity;
 import fr.zolkenn.lotr_custom_model.init.ModBlocks;
+import fr.zolkenn.lotr_custom_model.init.ModEntityTypes;
 import fr.zolkenn.lotr_custom_model.init.ModItems;
-import net.minecraft.client.Minecraft;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.jetbrains.annotations.NotNull;
 
 
 @Mod(Main.MID)
@@ -28,8 +32,7 @@ public class Main {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModItems.ITEMS.register(bus);
         ModBlocks.BLOCKS.register(bus);
-
-
+        ModEntityTypes.Entity_type.register(bus);
 
     }
 
@@ -57,13 +60,16 @@ public class Main {
         }
 
         @Override
-        public ResourceLocation getBackgroundImage() {
+        public @NotNull ResourceLocation getBackgroundImage() {
             return new ResourceLocation(MID,"textures/gui/container/creative_inventory/tab_items_custom.png" );
         }
     }
 
 
     private void setup(FMLCommonSetupEvent e){
+        DeferredWorkQueue.runLater(() ->{
+            GlobalEntityTypeAttributes.put(ModEntityTypes.Brute.get(), BruteEntity.setcustomAttributes().create());
+        });
 
     }
     private void clientSetup(FMLClientSetupEvent e){

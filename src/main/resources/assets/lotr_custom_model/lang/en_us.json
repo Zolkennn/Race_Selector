@@ -10,5 +10,6 @@
   "item.lotr_custom_model.model_changer": "Model Changer",
   "tooltype.hold_shift": "Hold shift for more information",
   "tooltype.model_changer": "Used for change your model for become elves for exemple.",
-  "lotr_custom_model.gui.menu.Button1": "WOLO"
+  "lotr_custom_model.gui.menu.Button1": "WOLO",
+  "Entity.lotr_custom_model.brute": "Brute"
 }

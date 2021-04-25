@@ -21,12 +21,14 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nullable;
+
 
 @OnlyIn(Dist.CLIENT)
 public class Morph extends Screen {
 
     private final ResourceLocation Gui_Morph = new ResourceLocation(Main.MID, "textures/gui/base.png");
-
+    @Nullable
     public FoxEntity fox;
 
     private final int xSize = 256;
@@ -82,8 +84,8 @@ public class Morph extends Screen {
     }
 
     public static void drawEntityOnScreen(MatrixStack matrixstack, int posX, int posY, int scale, float mouseX, float mouseY, LivingEntity livingEntity) {
-        float f = (float)Math.atan(mouseX / 40.0F);
-        float f1 = (float)Math.atan(mouseY / 40.0F);
+        float f = (float)Math.atan((double)(mouseX / 40.0F));
+        float f1 = (float)Math.atan((double)(mouseY / 40.0F));
         matrixstack.push();
         matrixstack.translate((float)posX, (float)posY, 1050.0F);
         matrixstack.scale(1.0F, 1.0F, -1.0F);
@@ -107,11 +109,12 @@ public class Morph extends Screen {
         quaternion1.conjugate();
         entityrenderermanager.setCameraOrientation(quaternion1);
         entityrenderermanager.setRenderShadow(false);
-        entityrenderermanager.setDebugBoundingBox(false);
         IRenderTypeBuffer.Impl irendertypebuffer$impl = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
-        RenderSystem.runAsFancy(() -> entityrenderermanager.renderEntityStatic(livingEntity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, matrixstack, irendertypebuffer$impl, 15728880));
+        RenderSystem.runAsFancy(() -> {
+            entityrenderermanager.renderEntityStatic(livingEntity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, matrixstack, irendertypebuffer$impl, 15728880);
+        });
         irendertypebuffer$impl.finish();
-        entityrenderermanager.setRenderShadow(false);
+        entityrenderermanager.setRenderShadow(true);
         livingEntity.renderYawOffset = f2;
         livingEntity.rotationYaw = f3;
         livingEntity.rotationPitch = f4;
